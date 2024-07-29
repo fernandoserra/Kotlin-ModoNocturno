@@ -7,15 +7,19 @@ import androidx.appcompat.app.AppCompatDelegate
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var preferencesProvider:PreferencesProvider
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //https://www.youtube.com/watch?v=QhGf8fGJM8U
-
-        val appSettingPrefs: SharedPreferences= getSharedPreferences("AppSettingPrefs",0)
+        /*val appSettingPrefs: SharedPreferences= getSharedPreferences("AppSettingPrefs",0)
         val sharePrefsEdit:  SharedPreferences.Editor=appSettingPrefs.edit()
-        val isNightModeOn: Boolean= appSettingPrefs.getBoolean("NightMode",false)
+        val isNightModeOn: Boolean= appSettingPrefs.getBoolean("NightMode",false)*/
+
+        preferencesProvider=PreferencesProvider(applicationContext)
+        val isNightModeOn: Boolean= preferencesProvider.getBoolean("NightMode")
 
         if(isNightModeOn){
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
@@ -26,12 +30,10 @@ class MainActivity : AppCompatActivity() {
         switch_btn.setOnClickListener {
             if(isNightModeOn){
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                sharePrefsEdit.putBoolean("NightMode",false)
-                sharePrefsEdit.apply()
+                preferencesProvider.putBoolean("NightMode",false)
             }else{
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                sharePrefsEdit.putBoolean("NightMode",true)
-                sharePrefsEdit.apply()
+                preferencesProvider.putBoolean("NightMode",true)
             }
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         }
