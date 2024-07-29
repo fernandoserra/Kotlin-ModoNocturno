@@ -11,8 +11,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //https://www.youtube.com/watch?v=QhGf8fGJM8U
-
         val appSettingPrefs: SharedPreferences= getSharedPreferences("AppSettingPrefs",0)
         val sharePrefsEdit:  SharedPreferences.Editor=appSettingPrefs.edit()
         val isNightModeOn: Boolean= appSettingPrefs.getBoolean("NightMode",false)
